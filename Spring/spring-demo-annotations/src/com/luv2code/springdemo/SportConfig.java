@@ -1,11 +1,12 @@
 package com.luv2code.springdemo;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 // @ComponentScan("com.luv2code.springdemo")
+@PropertySource("classpath:sport.properties")
 public class SportConfig {
 	
 	// define bean for our sad fortune service
@@ -20,5 +21,17 @@ public class SportConfig {
 	// public 인터페이스명 클래스명(구현체)
 	@Bean
 	public Coach swimCoach() {
-		return new SwimCoach(sadFortuneService()); // 위 sadFortuneService 메소드 호출 --> 의존성	}
+		return new SwimCoach(sadFortuneService()); // 위 sadFortuneService 메소드 호출 --> 의존성
+	}
+	
+	@Bean
+	public FortuneService newFortuneService() {
+		return new NewFortuneService();
+	}
+	
+	@Bean
+	public Coach elecCoach() {
+		return new ElecCoach(newFortuneService());
+	}
+	
 }
